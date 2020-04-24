@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 // {
 //     return view('welcome');
 // });
-
+Route::get('/test', function(){
+  return view('test');
+});
 Route::get('/', 'CompteController@index');
 
 Route::get('/bonjour/{nom}',function(){
@@ -39,8 +41,15 @@ Route::group([
 ], function(){
   Route::get('/utilisateurs', 'UtilisateursController@liste');
   Route::get('/moncompte', 'CompteController@accueil');
-  Route::get('/deconnexion', 'CompteController@deconnexion');
+  Route::get('/add-utilisateur', 'InscriptionController@formulaire');
+  Route::post('/add-utilisateur', 'InscriptionController@traitement');
+  //mise à jour du profil
+  Route::get('/profil', 'CompteController@formulaireprofil');
+  Route::post('/update_profil','CompteController@updateprofil');
   Route::post('/modification-password', 'CompteController@modificationpassword');
+  //fin
+
+  Route::get('/deconnexion', 'CompteController@deconnexion');
   Route::get('/accueil', function(){
     return view('accueil');
   });

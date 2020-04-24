@@ -12,7 +12,7 @@ class InscriptionController extends Controller
 {
     public function formulaire()
     {
-      return view('inscription');
+      return view('addutilisateur');
     }
 
     public function if_exist($val)
@@ -55,7 +55,7 @@ class InscriptionController extends Controller
           'password' => bcrypt(request('password'))
         ]
       );
-      flash('Compte crée avec succès! Connectez-vous!')->success();
-      return redirect('/connexion');
+      flash('Compte crée avec succès!')->success();
+      return redirect('/utilisateurs');
     }
 }

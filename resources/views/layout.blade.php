@@ -1,65 +1,61 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-      <title>Mon site</title>
+    <link rel="stylesheet" href="https://bootadmin.net/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://bootadmin.net/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="https://bootadmin.net/css/datatables.min.css">
+    <link rel="stylesheet" href="https://bootadmin.net/css/fullcalendar.min.css">
+    <link rel="stylesheet" href="https://bootadmin.net/css/bootadmin.min.css">
 
-      <!-- Fonts -->
-      <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Business Center</title>
+    <script src="https://kit.fontawesome.com/18119defd2.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-light">
 
-    </head>
-    <body>
+    @include('nav')
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="http://localhost/monAppli/public/">Site</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="http://localhost/monAppli/public/">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="inscription">Inscription</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="utilisateurs">Utilisateurs</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-          </ul>
+    <div class="d-flex">
+        <div class="sidebar sidebar-dark bg-dark">
+            @include('sidebar')
         </div>
-      </nav>
 
+        <div class="content p-4">
 
+            @yield('contenulayout')
 
-          <div class="container">
-            <div class="col-sm-6">
-                @include('flash::message')
-            </div>
-
-
-
-          @yield('contenu')
-
-
-
-
-          </div>
-
-
-    <footer>
-
-    </footer>
+        </div>
+    </div>
+<!--
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+-->
+<script src="https://bootadmin.net/js/jquery.min.js"></script>
+<script src="https://bootadmin.net/js/bootstrap.bundle.min.js"></script>
+<script src="https://bootadmin.net/js/datatables.min.js"></script>
+<script src="https://bootadmin.net/js/moment.min.js"></script>
+<script src="https://bootadmin.net/js/fullcalendar.min.js"></script>
+<script src="https://bootadmin.net/js/bootadmin.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
 
-    </body>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-118868344-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-118868344-1');
+</script>
+
+
+
+</body>
 </html>

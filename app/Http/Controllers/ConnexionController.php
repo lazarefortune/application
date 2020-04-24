@@ -27,7 +27,7 @@ class ConnexionController extends Controller
       if ($resultat) {
         flash("Connexion avec succès")->success();
 
-        return redirect('/moncompte');
+        return redirect('/');
       }
       else {
         return back()->withInput()-> withErrors([

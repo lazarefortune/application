@@ -1,4 +1,4 @@
-@extends('layoutconnexion');
+@extends('layoutconnexion')
 
 @section('contenuconnexion')
 
