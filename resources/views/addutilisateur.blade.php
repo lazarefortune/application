@@ -1,7 +1,42 @@
 @extends('layout')
 
 @section('contenulayout')
+<style type="text/css">
 
+/* The message box is shown when the user clicks on the password field */
+#message {
+  display:none;
+  background: #f1f1f1;
+  color: #000;
+  position: relative;
+  padding: 20px;
+  font-size: 8px !important;
+}
+
+#message p {
+  font-size: 12px;
+}
+
+/* Add a green text color and a checkmark when the requirements are right */
+.valid {
+  color: green;
+}
+
+.valid:before {
+  position: relative;
+  left: -35px;
+}
+
+/* Add a red text color and an "x" icon when the requirements are wrong */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -35px;
+}
+	</style>
 
     <div class="container col-sm-6">
 
@@ -16,7 +51,7 @@
         <div class="row">
           <div class="form-group col-sm-12">
             <label for="name"> <b>Identifiant</b> </label>
-            <input type="text" value="{{ old('name') }}" id="name" class="form-control " name="name" placeholder="Choisissez un identifiant">
+            <input type="text" value="{{ old('name') }}" id="name" class="form-control " name="name" placeholder="Choisissez un identifiant" required>
             @if($errors->has('name'))
               <div class="alert alert-danger" role="alert">
                 {{ $errors->first('name') }}
@@ -25,7 +60,7 @@
           </div>
           <div class="form-group col-sm-12">
             <label for="email"> <b>Email</b> </label>
-            <input type="email" value="{{ old('email') }}" id="mail" class="form-control " name="email" placeholder="Entrez votre adresse mail">
+            <input type="email" value="{{ old('email') }}" id="mail" class="form-control " name="email" placeholder="Entrez votre adresse mail" required>
             @if($errors->has('email'))
               <div class="alert alert-danger" role="alert">
                 {{ $errors->first('email') }}
@@ -36,8 +71,8 @@
           </div>
         <div class="row">
           <div class="form-group col-sm-6">
-            <label for="mdp"> <b>Mot de passe</b> </label>
-            <input type="password"  id="mdp" class="form-control" name="password" placeholder="Entrez un mot de passe">
+            <label for="password"> <b>Mot de passe</b> </label>
+            <input type="password"  id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" class="form-control" name="password" placeholder="Entrez un mot de passe" required>
             @if($errors->has('password'))
               <div class="alert alert-danger" role="alert">
                 {{ $errors->first('password') }}
@@ -46,7 +81,7 @@
           </div>
           <div class="form-group col-sm-6">
             <label for="mdp2"> <b>Confirmation du mot de passe</b> </label>
-            <input type="password"  id="mdp2" class="form-control" name="password_confirmation" placeholder="Saisir à nouveau">
+            <input type="password"  id="mdp2" class="form-control" name="password_confirmation" placeholder="Saisir à nouveau" required>
             @if($errors->has('password_confirmation'))
               <div class="alert alert-danger" role="alert">
                 {{ $errors->first('password_confirmation') }}
@@ -55,11 +90,79 @@
           </div>
 
         </div>
+        <div class="row"  id="message">
+          <h6> <b>Votre mot de passe doit contenir :</b></h6>
+          <p id="letter" class="invalid">Une lettre <b>minuscule</b> </p>
+          <p id="capital" class="invalid">Une lettre <b>majuscule</b> </p>
+          <p id="number" class="invalid">Un <b>nombre</b></p>
+          <p id="length" class="invalid">Au minimum <b>8 caractères</b></p>
+        </div>
 
         <input type="submit"  class="btn btn-primary btn-block" name="" value="Créer un compte">
 
 
       </form>
+
+
+<script>
+var myInput = document.getElementById("password");
+var letter = document.getElementById("letter");
+var capital = document.getElementById("capital");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+// When the user clicks on the password field, show the message box
+myInput.onfocus = function() {
+  document.getElementById("message").style.display = "block";
+}
+
+// When the user clicks outside of the password field, hide the message box
+myInput.onblur = function() {
+  document.getElementById("message").style.display = "none";
+}
+
+// When the user starts to type something inside the password field
+myInput.onkeyup = function() {
+  // Validate lowercase letters
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput.value.match(lowerCaseLetters)) {
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+}
+
+  // Validate capital letters
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput.value.match(upperCaseLetters)) {
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+
+  // Validate numbers
+  var numbers = /[0-9]/g;
+  if(myInput.value.match(numbers)) {
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+
+  // Validate length
+  if(myInput.value.length >= 8) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+}
+</script>
 
     </div>
 @endsection

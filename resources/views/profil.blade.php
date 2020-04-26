@@ -9,8 +9,8 @@
       <h2 class="mb-4"> <b>Compte utilisateur</b> </h2>
       @include('flash::message')
     <div class="card mb-4">
-        <div class="card-header bg-white font-weight-bold">
-            <h3> <b>Informations de connexion</b> </h3>
+        <div class="card-header bg-white font-weight-bold" style="border: 2px solid green;">
+            <h3 style=""> <b>Informations de connexion</b> </h3>
 
         </div>
         <div class="card-body">
@@ -47,7 +47,7 @@
     </div>
     <!-- MODIFICATION DU MOT DE PASSE -->
     <div class="card mb-4">
-        <div class="card-header bg-white font-weight-bold">
+        <div class="card-header bg-white font-weight-bold" style="border: 2px solid red;">
             <h3> <b>Modification du mot de passe</b> </h3>
         </div>
         <div class="card-body">

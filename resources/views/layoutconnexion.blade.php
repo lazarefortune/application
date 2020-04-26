@@ -2,12 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-
-    <title>Business | </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.6">
+    <title>Floating labels example · Bootstrap</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/floating-labels/">
 
     <!-- Bootstrap core CSS -->
+<!--
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -18,8 +23,6 @@
 <link rel="icon" href="/docs/4.4/assets/img/favicons/favicon.ico">
 <meta name="msapplication-config" content="/docs/4.4/assets/img/favicons/browserconfig.xml">
 <meta name="theme-color" content="#563d7c">
-
-<script src="https://kit.fontawesome.com/18119defd2.js" crossorigin="anonymous"></script>
 
 
     <style>
@@ -145,9 +148,6 @@
     <link href="floating-labels.css" rel="stylesheet">
   </head>
   <body>
-
     @yield('contenuconnexion')
-
-
-  </body>
+</body>
 </html>

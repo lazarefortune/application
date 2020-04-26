@@ -27,6 +27,20 @@ tandis que auth->guest() retourne vrai si la personne n'est pas connecté et fau
       return view('mon-compte');
     }
 
+
+      public function delete_utilisateur()
+      {
+        $id_utilisateur = request('id_utilisateur');
+
+        $utilisateur_delete = DB::delete('delete from utilisateurs where id = ?',[$id_utilisateur]);
+        $utilisateur_delete_clients = DB::delete('delete from clients where id_utilisateur = ?',[$id_utilisateur]);
+        flash('Utilisateur supprimé avec succès!')->success();
+        return redirect('/utilisateurs');
+
+      }
+
+
+
     public function formulaireprofil(){
       return view('profil');
     }

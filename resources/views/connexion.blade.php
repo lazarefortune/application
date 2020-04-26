@@ -18,14 +18,14 @@
 
   <div class="form-label-group">
 
-    <input  type="email" value="{{ old('email') }}" id="mail" class="form-control " name="email" placeholder="Entrez votre email">
+    <input  type="email" value="{{ old('email') }}" id="mail" class="form-control " name="email"placeholder="" >
     <label for="email"> <i class="fas fa-envelope"></i> Email </label>
 
   </div>
 
   <div class="form-label-group">
 
-    <input type="password"  id="mdp" class="form-control" name="password" placeholder="Entrez votre mdp">
+    <input type="password"  id="mdp" class="form-control" name="password" placeholder="">
     <label for="mdp"><i class="fas fa-unlock"></i>  Mot de passe </label>
     @if($errors->has('password'))
       <div class="alert alert-danger" role="alert">
