@@ -3,14 +3,27 @@
 @section('contenulayout')
 
 
+<div class="row">
+  <div class="col-sm-12">
+    <div class="d-flex justify-content-between">
+      <a href="{{ url('/') }}" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i></i> </a>
+    </div>
 
-    <div class="container col-sm-8">
+
+  </div>
+</div>
+<hr>
+
+    <div class="row">
+      <div class="col-md-12">
+
+
 
       <h2 class="mb-4"> <b>Compte utilisateur</b> </h2>
       @include('flash::message')
     <div class="card mb-4">
         <div class="card-header bg-white font-weight-bold" style="border: 2px solid green;">
-            <h3 style=""> <b>Informations de connexion</b> </h3>
+            <h6 style=""> <b>Informations de connexion</b> </h5>
 
         </div>
         <div class="card-body">
@@ -48,7 +61,7 @@
     <!-- MODIFICATION DU MOT DE PASSE -->
     <div class="card mb-4">
         <div class="card-header bg-white font-weight-bold" style="border: 2px solid red;">
-            <h3> <b>Modification du mot de passe</b> </h3>
+            <h6> <b>Modification du mot de passe</b> </h6>
         </div>
         <div class="card-body">
             <form method="post" action="modification-password">
@@ -95,6 +108,6 @@
             </form>
         </div>
     </div>
-
+    </div>
   </div>
 @endsection

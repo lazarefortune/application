@@ -19,11 +19,24 @@ class ClientController extends Controller
   {
 
     if((auth()->user()->statut) == 1){
-      $clients =  \App\Clients::all();
+      $clients =  DB::select('select * from clients order by nom, prenom');
     }else{
-      $clients = DB::select('select * from clients where id_utilisateur = ?', [(auth()->user()->id)]);
+      $clients = DB::select('select * from clients where id_utilisateur = ? order by nom, prenom', [(auth()->user()->id)]);
     }
-    return view('mes-clients', [
+    return view('mes-clients2', [
+      'clients' => $clients
+    ]);
+  }
+
+  public function liste_mauvais()
+  {
+
+    if((auth()->user()->statut) == 1){
+      $clients =  DB::select('select * from clients where statut_client = 2 order by nom, prenom ');
+    }else{
+      $clients = DB::select('select * from clients where id_utilisateur = ? and statut_client = 2 order by nom, prenom', [(auth()->user()->id)]);
+    }
+    return view('mes-clients2', [
       'clients' => $clients
     ]);
   }
@@ -93,10 +106,11 @@ class ClientController extends Controller
       ]
     );
 
+    $client = DB::select('select * from clients where contact_1 = ?', [request('contact_1')]);
 
 
     flash('Client crée avec succès!')->success();
-    return redirect('/add-emprunt');
+    return redirect('/add-emprunt'.'/'.$client[0]->id);
   }
 
   public function deleteclient()
@@ -273,5 +287,35 @@ class ClientController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search()
+    {
+      request()->validate([
+        'q' => 'required|min:2'
+      ]);
+
+      $q = request()->input('q');
+
+      if((auth()->user()->id) != 1) {
+        $clients = Clients::where('id_utilisateur', '=' , (auth()->user()->id))
+        ->where('nom', 'like', "%$q%")
+        ->where('id_utilisateur', '=' , (auth()->user()->id))
+        ->orWhere('prenom', 'like', "%$q%")
+        ->where('id_utilisateur', '=' , (auth()->user()->id))
+        ->orWhere('entreprise', 'like', "%$q%")
+        ->where('id_utilisateur', '=' , (auth()->user()->id))
+        ->orWhere('banque', 'like', "%$q%")
+        ->paginate(60);
+      }else {
+        $clients = Clients::where('nom', 'like', "%$q%")
+        ->orWhere('prenom', 'like', "%$q%")
+        ->orWhere('entreprise', 'like', "%$q%")
+        ->orWhere('banque', 'like', "%$q%")
+        ->paginate(60);
+      }
+
+      return view('search')->with('clients', $clients);
+
     }
 }

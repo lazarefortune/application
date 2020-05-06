@@ -38,27 +38,40 @@
 }
 	</style>
 
-    <div class="container col-sm-6">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="d-flex justify-content-between">
+        <a href="{{ url()->previous() }}" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i></i> </a>
+      </div>
+
+
+    </div>
+  </div>
+  <hr>
+  @include('flash::message')
+
+
 
 
       <form method="post">
         {{ csrf_field() }}
-        <h2 > <b>Ajout d'un utilisateur</b> </h2>
+        <h5 > <b>Ajout d'un utilisateur</b> </h5>
+        <hr>
 
 
 
 
         <div class="row">
-          <div class="form-group col-sm-12">
-            <label for="name"> <b>Identifiant</b> </label>
-            <input type="text" value="{{ old('name') }}" id="name" class="form-control " name="name" placeholder="Choisissez un identifiant" required>
+          <div class="form-group col-sm-12 col-md-6">
+            <label for="name"> <b>Nom du propriétaire</b> </label>
+            <input type="text" value="{{ old('name') }}" id="name" class="form-control " name="name" placeholder="Entrez le nom" required>
             @if($errors->has('name'))
               <div class="alert alert-danger" role="alert">
                 {{ $errors->first('name') }}
               </div>
             @endif
           </div>
-          <div class="form-group col-sm-12">
+          <div class="form-group col-sm-12 col-md-6">
             <label for="email"> <b>Email</b> </label>
             <input type="email" value="{{ old('email') }}" id="mail" class="form-control " name="email" placeholder="Entrez votre adresse mail" required>
             @if($errors->has('email'))
@@ -68,7 +81,8 @@
             @endif
           </div>
 
-          </div>
+        </div>
+
         <div class="row">
           <div class="form-group col-sm-6">
             <label for="password"> <b>Mot de passe</b> </label>
@@ -80,7 +94,7 @@
             @endif
           </div>
           <div class="form-group col-sm-6">
-            <label for="mdp2"> <b>Confirmation du mot de passe</b> </label>
+            <label for="mdp2"> <b>Confirmation </b> </label>
             <input type="password"  id="mdp2" class="form-control" name="password_confirmation" placeholder="Saisir à nouveau" required>
             @if($errors->has('password_confirmation'))
               <div class="alert alert-danger" role="alert">
@@ -90,6 +104,7 @@
           </div>
 
         </div>
+
         <div class="row"  id="message">
           <h6> <b>Votre mot de passe doit contenir :</b></h6>
           <p id="letter" class="invalid">Une lettre <b>minuscule</b> </p>
@@ -164,5 +179,5 @@ myInput.onkeyup = function() {
 }
 </script>
 
-    </div>
+
 @endsection

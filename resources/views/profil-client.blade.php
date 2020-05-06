@@ -9,7 +9,7 @@
       padding: 10px;
       font-size: 16px;
     }
-    input[type=text] {
+    .input_style {
       background-color: #f1f1f1;
       width: 100%;
     }
@@ -47,15 +47,20 @@
 		}
 	</style>
 
-<div class="container col-sm-10">
-@include('flash::message')
+  <div class="row">
+		<div class="col-sm-12">
+			<div class="d-flex justify-content-between">
+				<a href="{{ url('mes-clients') }}" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i></i> </a>
+			</div>
 
-<div class="d-flex justify-content-between">
-  <a href="../mes-clients" class="btn btn-primary"><i class="fas fa-chevron-left"></i></i> Retour à la liste</a>
 
-</div>
+		</div>
+	</div>
+	<hr>
+	@include('flash::message')
 
-<div class="col-md-12 order-md-1">
+
+
   <form class="needs-validation" method="POST" novalidate>
     {{ csrf_field() }}
   <h4 class="mb-3"><b>Profil du client </b></h4>
@@ -63,14 +68,14 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label for="firstName">nom</label>
-        <input type="text" value="<?= $client[0]->nom  ?>" class="form-control" id="firstName" placeholder="" name="nom" value="" required>
+        <input type="text" value="<?= $client[0]->nom  ?>" class="form-control input_style" id="firstName" placeholder="" name="nom" value="" required>
         <div class="invalid-feedback">
           Entrez le nom.
         </div>
       </div>
       <div class="col-md-6 mb-3">
         <label for="lastName">prenom</label>
-        <input type="text" value="<?= $client[0]->prenom  ?>" class="form-control" name="prenom" id="lastName" placeholder="" value="<?= $client[0]->nom  ?>" required>
+        <input type="text" value="<?= $client[0]->prenom  ?>" class="form-control input_style" name="prenom" id="lastName" placeholder="" value="<?= $client[0]->nom  ?>" required>
         <div class="invalid-feedback">
           Entrez le prenom.
         </div>
@@ -84,7 +89,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">+241</span>
           </div>
-          <input type="text" value="<?= $client[0]->contact_1  ?>" class="form-control" id="Contact1" placeholder="ex: 66112233" name="contact_1" required>
+          <input type="text" value="<?= $client[0]->contact_1  ?>" class="form-control input_style" id="Contact1" placeholder="" name="contact_1" required>
           <div class="invalid-feedback" style="width: 100%;">
             Entrez le numéro 1.
           </div>
@@ -102,7 +107,7 @@
           <div class="input-group-prepend">
             <span class="input-group-text">+241</span>
           </div>
-          <input type="text" value="<?= $client[0]->contact_2  ?>" class="form-control" id="Contact2" placeholder="66112233" name="contact_2">
+          <input type="text" value="<?= $client[0]->contact_2  ?>" class="form-control input_style" id="Contact2" placeholder="" name="contact_2">
           <div class="invalid-feedback" style="width: 100%;">
             Entrez le numéro 2.
           </div>
@@ -115,9 +120,12 @@
       </div>
     </div>
 
-    <div class="mb-3">
+    <div class="row">
+
+
+    <div class="col-sm-6 mb-3">
       <label for="Entreprise">Entreprise</label>
-      <input type="text" value="<?= $client[0]->entreprise  ?>" class="form-control" id="Entreprise" placeholder="" name="entreprise" required>
+      <input type="text" value="<?= $client[0]->entreprise  ?>" class="form-control input_style" id="Entreprise" placeholder="" name="entreprise" required>
       <div class="invalid-feedback">
         Entrez l'entreprise du client.
       </div>
@@ -128,9 +136,9 @@
       @endif
     </div>
 
-    <div class="mb-3">
+    <div class="col-sm-6 mb-3">
       <label for="fonction">Fonction</label>
-      <input type="text" value="<?= $client[0]->fonction  ?>" class="form-control" id="fonction" placeholder="" name="fonction">
+      <input type="text" value="<?= $client[0]->fonction  ?>" class="form-control input_style" id="fonction" placeholder="" name="fonction">
       <div class="invalid-feedback">
         Entrez la fonction du client.
       </div>
@@ -140,6 +148,8 @@
         </div>
       @endif
     </div>
+
+    </div>
     <?php
     $clients = DB::select('select id,nom from clients where id_utilisateur = ?', [(auth()->user()->id)]);
 
@@ -148,7 +158,10 @@
     <script type="text/javascript">
       var countries = [];
     </script>
-    <div class="mb-3">
+
+    <div class="row">
+
+    <div class="col-sm-6 mb-3">
       <label for="myInput">Recommandé par : </label>
           @foreach($clients as $client_liste)
           <script type="text/javascript">
@@ -160,7 +173,7 @@
           $nom_reco = DB::select('select nom from clients where id = ?', [($client[0]->recommand_name)]);
           ?>
             <div class="autocomplete" >
-              <input value="<?php if(!empty($nom_reco)){ echo $nom_reco[0]->nom; }  ?>" name="recommand_name" class="form-control" id="myInput" type="text" name="myInput" placeholder="Saisir le nom du client...">
+              <input value="<?php if(!empty($nom_reco)){ echo $nom_reco[0]->nom; }  ?>" name="recommand_name" class="form-control input_style" id="myInput" type="text" name="myInput" placeholder="Saisir le nom du client...">
             </div>
 
 
@@ -175,13 +188,13 @@
       <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Statut du client : </label>
 
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-primary <?php if(($client[0]->statut_client)== 0){ echo 'active'; } ?>">
+        <label class="btn btn-primary btn-sm <?php if(($client[0]->statut_client)== 0){ echo 'active'; } ?>">
         <input type="radio" name="statut_client" value="0" id="option1" autocomplete="off" <?php if(($client[0]->statut_client)== 'Aucun'){ printf('checked'); } ?>>Aucun
         </label>
-        <label class="btn btn-primary <?php if(($client[0]->statut_client)== 1){ echo 'active'; } ?>">
+        <label class="btn btn-primary btn-sm <?php if(($client[0]->statut_client)== 1){ echo 'active'; } ?>">
           <input type="radio" name="statut_client" value="1" id="option2" autocomplete="off" <?php if(($client[0]->statut_client)== 1){ echo 'checked'; } ?>> <i class="far fa-thumbs-up"></i>
         </label>
-        <label class="btn btn-primary <?php if(($client[0]->statut_client)== 2){ echo 'active'; } ?>">
+        <label class="btn btn-primary btn-sm <?php if(($client[0]->statut_client)== 2){ echo 'active'; } ?>">
           <input type="radio" name="statut_client" value="2" id="option3" autocomplete="off" <?php if(($client[0]->statut_client)== 2){ echo 'checked'; } ?>> <i class="far fa-thumbs-down" ></i>
         </label>
       </div>
@@ -191,6 +204,8 @@
           {{ $errors->first('statut_client') }}
         </div>
       @endif
+    </div>
+
     </div>
 
 
@@ -211,7 +226,11 @@
             <optgroup label="Choisir...">
               <option>BGFI</option>
               <option>BICIG</option>
+              <option>Finam</option>
+              <option>Finatra</option>
               <option>Orabank</option>
+              <option>U.B.A</option>
+              <option>U.G.B</option>
               <option selected><?= $client[0]->banque  ?></option>
             </optgroup>
           </select>
@@ -226,7 +245,7 @@
         </div>
         <div class="col-md-6 mb-3">
           <label for="cc-number">Numero de la carte</label>
-          <input type="number" value="<?= $client[0]->numero_cart  ?>" class="form-control" id="cc-number" placeholder="" name="numero_cart">
+          <input type="text" value="<?= $client[0]->numero_cart  ?>" class="form-control" id="cc-number" placeholder="" maxlength="9" name="numero_cart">
           <div class="invalid-feedback">
             Credit card number is required
           </div>
@@ -240,7 +259,7 @@
       <div class="row">
         <div class="col-md-3 mb-3">
           <label for="cc-expiration">Code de la carte</label>
-          <input type="number" value="<?= $client[0]->code_cart  ?>" class="form-control" id="cc-expiration" placeholder="" name="code_cart">
+          <input type="text" value="<?= $client[0]->code_cart  ?>" class="form-control" id="cc-expiration" maxlength="5" placeholder="" name="code_cart">
           <div class="invalid-feedback">
             Cart code required
           </div>
@@ -253,7 +272,46 @@
       </div>
     </div>
     <hr class="mb-4">
-    <button class="btn btn-success btn-lg btn-block" type="submit" name="newclient">Mettre à jour les informations du client</button>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <button type="button" data-toggle="modal" data-target="#exampleModalCenter" class="btn btn-danger btn-lg btn-block" name="button">Supprimer le client</button>
+      </div>
+
+      <div class="col-sm-6">
+        <button class="btn btn-success btn-lg btn-block" type="submit" name="newclient">Mettre à jour</button>
+      </div>
+
+    </div>
+
+    <hr>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle" style="color: red;">Vous êtes sur le point de supprimer le client suivant :</h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+          </div>
+          <div class="modal-body text-center">
+            <h3> <b><?= $client[0]->nom, ' ',$client[0]->prenom ?></b></h3>
+
+          </div>
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <a href="{{ url('delete-client') }}/<?= $client[0]->id ?>"><button type="button" class="btn btn-danger">Oui supprimer</button></a>
+
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script type="text/javascript">
       function calcul(){
@@ -271,101 +329,12 @@
 
   </form>
 
-  <div class="col-md-12 order-md-1">
-    <h4 class="mb-3"><b>Liste des emprunts du client</b></h4>
 
 
 
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample20" aria-expanded="false" aria-controls="collapseExample2">
-      Voir les emprunts
-    </button> <hr>
-    <div class="collapse" id="collapseExample20">
-
-      <div class="card mb-4">
-          <div class="card-body">
-              <table id="example" class="table table-hover" cellspacing="0" width="100%">
-                  <thead>
-                  <tr>
-                      <th>Date emprunt</th>
-                      <th>montant</th>
-                      <th>taux</th>
-                      <th>montant dû </th>
-                      <th>date remboursement</th>
-                      <th class="actions">Actions</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <?php $total = 0; ?>
-                  @foreach($emprunts as $emprunt)
-
-                  <tr>
-                      <td>{{ $emprunt->date_emprunt }}</td>
-
-                      <td><a href=""> {{ $emprunt->montant }} </a></td>
-
-                      <td>{{ $emprunt->taux_interet }}</td>
-                      <?php $montant_du = ($emprunt->montant+(($emprunt->montant * $emprunt->taux_interet)/100)) ?>
-                      <td> <?= $montant_du ?> </td>
-                          <?php $total = $total + $montant_du; ?>
-
-                      <td>{{ $emprunt->date_echeance }}</td>
-
-                      <td>
-                        <!--  <a href="" class="btn btn-icon btn-pill btn-primary" data-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-edit"></i></a>
-                          <a href="#" class="btn btn-icon btn-pill btn-danger" data-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-trash"></i></a> -->
-                          <button type="button" class="btn btn-icon btn-pill btn-danger" data-toggle="modal" data-target="#exampleModalCenter{{ $emprunt->id }}"><i class="fa fa-fw fa-trash"></i></button>
-
-
-                      </td>
-                  </tr>
-
-                  <!-- Modal -->
-                  <div class="modal fade" id="exampleModalCenter{{ $emprunt->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalCenterTitle{{ $emprunt->id }}" style="color: red;">Vous êtes sur le point de supprimer l'emprunt suivant :</h5>
-
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-
-                        </div>
-                        <div class="modal-body text-center">
-                          <p> Emprunt fait le : <b>{{ $emprunt->date_emprunt }}</b></p>
-                          <p>D'un montant de : <b>{{ $emprunt->montant }} Fcfa</b> </p>
-                          <p>Le montant à perçevoir est : <b><?= $montant_du ?> Fcfa</b> </p>
-                          <p>Date de remboursement prévu pour : <b>{{ $emprunt->date_echeance }}</b></p>
-
-                        </div>
-                        <div class="modal-footer">
-
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                          <a href="../delete-emprunt/{{ $emprunt->id }}"><button type="button" class="btn btn-danger">Oui supprimer</button></a>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  @endforeach
-                  </tbody>
-              </table>
-          </div>
-      </div>
-
-    </div>
-
-    <hr class="mb-4">
-    Le client me doit un total de : <b><?= $total ?> Fcfa</b>
-    <a href="../add-emprunt"  class="btn btn-primary">Ajouter un emprunt</a>
-
-  </div>
 
 
 
-  </div>
-</div>
 
 
 <script type="text/javascript">

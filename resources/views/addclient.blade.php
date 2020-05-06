@@ -37,227 +37,256 @@
 		}
 	</style>
 
-<div class="container col-sm-10">
-@include('flash::message')
-<div class="col-md-12 order-md-1">
-  <form class="needs-validation" method="POST" novalidate>
-    {{ csrf_field() }}
-  <h4 class="mb-3"><b>Nouveau client </b></h4>
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label for="firstName">nom</label>
-        <input type="text" value="{{ old('nom') }}" class="form-control" id="firstName" placeholder="" name="nom" value="" required>
-        <div class="invalid-feedback">
-          Entrez le nom.
-        </div>
-      </div>
-      <div class="col-md-6 mb-3">
-        <label for="lastName">prenom</label>
-        <input type="text" value="{{ old('prenom') }}" class="form-control" name="prenom" id="lastName" placeholder="" value="" required>
-        <div class="invalid-feedback">
-          Entrez le prenom.
-        </div>
-      </div>
-    </div>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="d-flex justify-content-between">
+				<a href="{{ url('/') }}" class="btn btn-primary btn-sm"><i class="fas fa-chevron-left"></i></i> </a>
+			</div>
 
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label for="Contact1">Contact 1</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">+241</span>
-          </div>
-          <input type="text" value="{{ old('contact_1') }}" class="form-control" id="Contact1" placeholder="ex: 66112233" name="contact_1" maxlength="9" minlength="8" required>
-          <div class="invalid-feedback" style="width: 100%;">
-            Entrez le numéro 1.
-          </div>
-        </div>
-        @if($errors->has('contact_1'))
-          <div class="alert alert-danger" role="alert">
-            {{ $errors->first('contact_1') }}
-          </div>
-        @endif
 
-      </div>
-      <div class="col-md-6 mb-3">
-        <label for="Contact2">Contact 2</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">+241</span>
-          </div>
-          <input type="text" value="{{ old('contact_2') }}" class="form-control" id="Contact2" placeholder="66112233" maxlength="9" minlength="8" name="contact_2">
-          <div class="invalid-feedback" style="width: 100%;">
-            Entrez le numéro 2.
-          </div>
-          @if($errors->has('contact_2'))
-            <div class="alert alert-danger" role="alert">
-              {{ $errors->first('contact_2') }}
-            </div>
-          @endif
-        </div>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label for="Entreprise">Entreprise</label>
-      <input type="text" value="{{ old('entreprise') }}" class="form-control" id="Entreprise" placeholder="" name="entreprise" required>
-      <div class="invalid-feedback">
-        Entrez l'entreprise du client.
-      </div>
-      @if($errors->has('entreprise'))
-        <div class="alert alert-danger" role="alert">
-          {{ $errors->first('entreprise') }}
-        </div>
-      @endif
-    </div>
-
-    <div class="mb-3">
-      <label for="fonction">Fonction</label>
-      <input type="text" value="{{ old('fonction') }}" class="form-control" id="fonction" placeholder="" name="fonction">
-      <div class="invalid-feedback">
-        Entrez la fonction du client.
-      </div>
-      @if($errors->has('fonction'))
-        <div class="alert alert-danger" role="alert">
-          {{ $errors->first('fonction') }}
-        </div>
-      @endif
-    </div>
-    <?php
-    $clients = DB::select('select id,nom from clients where id_utilisateur = ?', [(auth()->user()->id)]);
-
-    ?>
-
-    <script type="text/javascript">
-      var countries = [];
-    </script>
-    <div class="mb-3">
-      <label for="myInput">Recommandé par : </label>
-          @foreach($clients as $client)
-          <script type="text/javascript">
-	           countries.push('<?= $client->nom ?>');
-          </script>
-          <?php  ?>
-          @endforeach
-            <div class="autocomplete" >
-              <input value="{{ old('recommand_name') }}" name="recommand_name" class="form-control" id="myInput" type="text" name="myInput" placeholder="Saisir le nom du client...">
-              @if($errors->has('recommand_name'))
-                <div class="alert alert-danger" role="alert">
-                  {{ $errors->first('recommand_name') }}
-                </div>
-              @endif
-            </div>
+		</div>
+	</div>
+	<hr>
+	@include('flash::message')
 
 
 
-    </div>
+	  <form class="needs-validation" method="POST" novalidate>
+	    {{ csrf_field() }}
+			<div class="ml-auto mr-auto row">
+				<h4 class="mb-3"><b>Créer un client</b></h4>
+			</div>
 
-    <div class="col-md-6 mb-3">
-      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Statut du client : </label>
+	    <div class="row">
+	      <div class="col-md-6 mb-3">
+	        <label for="firstName">nom</label>
+	        <input type="text" value="{{ old('nom') }}" class="form-control" id="firstName" placeholder="" name="nom" value="" minlength="3" required>
+	        <div class="invalid-feedback">
+	          Entrez le nom.
+	        </div>
+	      </div>
+	      <div class="col-md-6 mb-3">
+	        <label for="lastName">prenom</label>
+	        <input type="text" value="{{ old('prenom') }}" class="form-control" name="prenom" id="lastName" placeholder="" value="" minlength="3" required>
+	        <div class="invalid-feedback">
+	          Entrez le prenom.
+	        </div>
+	      </div>
+	    </div>
 
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-primary active">
-          <input type="radio" name="statut_client" value="0" id="option1" autocomplete="off" checked> Aucun
-        </label>
-        <label class="btn btn-primary">
-          <input type="radio" name="statut_client" value="1" id="option2" autocomplete="off"> <i class="far fa-thumbs-up"></i>
-        </label>
-        <label class="btn btn-primary">
-          <input type="radio" name="statut_client" value="2" id="option3" autocomplete="off"> <i class="far fa-thumbs-down"></i>
-        </label>
-      </div>
+	    <div class="row">
+	      <div class="col-md-6 mb-3">
+	        <label for="Contact1">Contact 1</label>
+	        <div class="input-group">
+	          <div class="input-group-prepend">
+	            <span class="input-group-text">+241</span>
+	          </div>
+	          <input type="text" value="{{ old('contact_1') }}" class="form-control" id="Contact1" placeholder="" name="contact_1" maxlength="9" minlength="8" required>
+	          <div class="invalid-feedback" style="width: 100%;">
+	            Entrez le numéro 1.
+	          </div>
+	        </div>
+	        @if($errors->has('contact_1'))
+	          <div class="alert alert-danger" role="alert">
+	            {{ $errors->first('contact_1') }}
+	          </div>
+	        @endif
 
-      @if($errors->has('statut_client'))
-        <div class="alert alert-danger" role="alert">
-          {{ $errors->first('statut_client') }}
-        </div>
-      @endif
-    </div>
+	      </div>
+	      <div class="col-md-6 mb-3">
+	        <label for="Contact2">Contact 2</label>
+	        <div class="input-group">
+	          <div class="input-group-prepend">
+	            <span class="input-group-text">+241</span>
+	          </div>
+	          <input type="text" value="{{ old('contact_2') }}" class="form-control" id="Contact2" placeholder="" maxlength="9" minlength="8" name="contact_2">
+	          <div class="invalid-feedback" style="width: 100%;">
+	            Entrez le numéro 2.
+	          </div>
+	          @if($errors->has('contact_2'))
+	            <div class="alert alert-danger" role="alert">
+	              {{ $errors->first('contact_2') }}
+	            </div>
+	          @endif
+	        </div>
+	      </div>
+	    </div>
 
-
-
-
-
-
-    <hr class="mb-4">
-
-    <h4 class="mb-3"><b>Carte visa</b></h4>
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-      Ajouter carte visa
-    </button>
-    <div class="collapse" id="collapseExample">
-      <div class="row" >
-
-        <div class="col-md-6 mb-3">
-          <label for="banque">Banque</label>
-          <select class="custom-select d-block w-100" id="banque" name="banque" >
-            <optgroup label="Choisir...">
-              <option>BGFI</option>
-              <option>BICIG</option>
-              <option>Orabank</option>
-              <option selected></option>
-            </optgroup>
-          </select>
-          <div class="invalid-feedback">
-            Please select a valid Bank.
-          </div>
-          @if($errors->has('banque'))
-            <div class="alert alert-danger" role="alert">
-              {{ $errors->first('banque') }}
-            </div>
-          @endif
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="cc-number">Numero de la carte</label>
-          <input type="number" value="{{ old('numero_cart') }}" class="form-control" id="cc-number" placeholder="" name="numero_cart">
-          <div class="invalid-feedback">
-            Credit card number is required
-          </div>
-          @if($errors->has('numero_cart'))
-            <div class="alert alert-danger" role="alert">
-              {{ $errors->first('numero_cart') }}
-            </div>
-          @endif
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-3 mb-3">
-          <label for="cc-expiration">Code de la carte</label>
-          <input type="number" value="{{ old('code_cart') }}" class="form-control" id="cc-expiration" placeholder="" name="code_cart">
-          <div class="invalid-feedback">
-            Cart code required
-          </div>
-          @if($errors->has('code_cart'))
-            <div class="alert alert-danger" role="alert">
-              {{ $errors->first('code_cart') }}
-            </div>
-          @endif
-        </div>
-      </div>
-    </div>
-    <hr class="mb-4">
+			<div class="row">
 
 
-    <script type="text/javascript">
-      function calcul(){
-          var montant = Number(document.getElementById("montant").value);
+	    <div class="col-md-6 mb-3">
+	      <label for="Entreprise">Entreprise</label>
+	      <input type="text" value="{{ old('entreprise') }}" class="form-control" id="Entreprise" placeholder="" name="entreprise" minlength="3" required>
+	      <div class="invalid-feedback">
+	        Entrez l'entreprise du client.
+	      </div>
+	      @if($errors->has('entreprise'))
+	        <div class="alert alert-danger" role="alert">
+	          {{ $errors->first('entreprise') }}
+	        </div>
+	      @endif
+	    </div>
 
-          var taux = Number(document.getElementById("taux").value);
+	    <div class="col-md-6 mb-3">
+	      <label for="fonction">Fonction</label>
+	      <input type="text" value="{{ old('fonction') }}" class="form-control" id="fonction" placeholder="" name="fonction">
+	      <div class="invalid-feedback">
+	        Entrez la fonction du client.
+	      </div>
+	      @if($errors->has('fonction'))
+	        <div class="alert alert-danger" role="alert">
+	          {{ $errors->first('fonction') }}
+	        </div>
+	      @endif
+	    </div>
 
-          var total = Number((montant + (montant * taux)/100));
-          document.getElementById("total").value = total;
-      }
+			</div>
 
-      </script>
+	    <?php
+	    $clients = DB::select('select id,nom from clients where id_utilisateur = ?', [(auth()->user()->id)]);
 
-    <hr class="mb-4">
+	    ?>
+
+	    <script type="text/javascript">
+	      var countries = [];
+	    </script>
+
+			<div class="row">
+
+	    <div class="col-md-6 mb-3">
+	      <label for="myInput">Recommandé par : </label>
+	          @foreach($clients as $client)
+	          <script type="text/javascript">
+		           countries.push('<?= $client->nom ?>');
+	          </script>
+	          <?php  ?>
+	          @endforeach
+	            <div class="autocomplete" >
+	              <input value="{{ old('recommand_name') }}" name="recommand_name" class="form-control" id="myInput" type="text" name="myInput" placeholder="Saisir le nom du client...">
+	              @if($errors->has('recommand_name'))
+	                <div class="alert alert-danger" role="alert">
+	                  {{ $errors->first('recommand_name') }}
+	                </div>
+	              @endif
+	            </div>
 
 
-    <button class="btn btn-primary btn-lg btn-block" type="submit" name="newclient">Créer le client</button>
 
-  </form>
-</div>
-</div>
+	    </div>
+
+	    <div class="col-md-6 mb-3">
+	      <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Statut du client : </label>
+
+	      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+	        <label class="btn btn-primary btn-sm active">
+	          <input type="radio" name="statut_client" value="0" id="option1" autocomplete="off" checked> Aucun
+	        </label>
+	        <label class="btn btn-primary btn-sm">
+	          <input type="radio" name="statut_client" value="1" id="option2" autocomplete="off"> <i class="far fa-thumbs-up"></i>
+	        </label>
+	        <label class="btn btn-primary btn-sm">
+	          <input type="radio" name="statut_client" value="2" id="option3" autocomplete="off"> <i class="far fa-thumbs-down"></i>
+	        </label>
+	      </div>
+
+	      @if($errors->has('statut_client'))
+	        <div class="alert alert-danger" role="alert">
+	          {{ $errors->first('statut_client') }}
+	        </div>
+	      @endif
+	    </div>
+			</div>
+
+
+
+
+
+
+	    <hr class="mb-4">
+
+	    <h4 class="mb-3"><b>Carte visa</b></h4>
+	    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+	      Ajouter carte visa
+	    </button>
+	    <div class="collapse" id="collapseExample">
+	      <div class="row" >
+
+	        <div class="col-md-6 mb-3">
+	          <label for="banque">Banque</label>
+	          <select class="custom-select d-block w-100" id="banque" name="banque" >
+	            <optgroup label="Choisir...">
+	              <option>BGFI</option>
+	              <option>BICIG</option>
+	              <option>Orabank</option>
+								<option>Finam</option>
+	              <option>Finatra</option>
+	              <option>U.B.A</option>
+	              <option>U.G.B</option>
+	              <option selected></option>
+	            </optgroup>
+	          </select>
+	          <div class="invalid-feedback">
+	            Please select a valid Bank.
+	          </div>
+	          @if($errors->has('banque'))
+	            <div class="alert alert-danger" role="alert">
+	              {{ $errors->first('banque') }}
+	            </div>
+	          @endif
+	        </div>
+	        <div class="col-md-6 mb-3">
+	          <label for="cc-number">Numero de la carte</label>
+	          <input type="number" value="{{ old('numero_cart') }}" class="form-control" id="cc-number" placeholder="" name="numero_cart">
+	          <div class="invalid-feedback">
+	            Credit card number is required
+	          </div>
+	          @if($errors->has('numero_cart'))
+	            <div class="alert alert-danger" role="alert">
+	              {{ $errors->first('numero_cart') }}
+	            </div>
+	          @endif
+	        </div>
+	      </div>
+	      <div class="row">
+	        <div class="col-md-3 mb-3">
+	          <label for="cc-expiration">Code de la carte</label>
+	          <input type="number" value="{{ old('code_cart') }}" class="form-control" id="cc-expiration" placeholder="" name="code_cart">
+	          <div class="invalid-feedback">
+	            Cart code required
+	          </div>
+	          @if($errors->has('code_cart'))
+	            <div class="alert alert-danger" role="alert">
+	              {{ $errors->first('code_cart') }}
+	            </div>
+	          @endif
+	        </div>
+	      </div>
+	    </div>
+	    <hr class="mb-4">
+
+
+	    <script type="text/javascript">
+	      function calcul(){
+	          var montant = Number(document.getElementById("montant").value);
+
+	          var taux = Number(document.getElementById("taux").value);
+
+	          var total = Number((montant + (montant * taux)/100));
+	          document.getElementById("total").value = total;
+	      }
+
+	      </script>
+
+	    <hr class="mb-4">
+
+
+	    <button class="btn btn-primary btn-lg btn-block" type="submit" name="newclient">Créer le client</button>
+
+	  </form>
+	</div>
+
+
 
 <script type="text/javascript">
 // Example starter JavaScript for disabling form submissions if there are invalid fields

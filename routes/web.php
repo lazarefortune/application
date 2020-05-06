@@ -48,28 +48,47 @@ Route::group([
   Route::get('/add-client', 'ClientController@formulaire');
   Route::post('/add-client', 'ClientController@traitement');
 
+  Route::get('/mes-clients/mauvais-payeurs', 'ClientController@liste_mauvais');
+
+  Route::get('/compte-global', 'EmpruntController@montant_place');
+  Route::post('/compte-global', 'EmpruntController@montant_place_traitement');
+
   Route::get('/mes-clients', 'ClientController@liste');
   //profil du client
   Route::get('/profil-client/{id_client}','ClientController@profilclient');
   Route::post('/profil-client/{id_client}','ClientController@updateclient');
   //mise à jour du profil utilisateur
+
   Route::get('/profil', 'CompteController@formulaireprofil');
+
+//  Route::get('/profil', function () {
+      // Users must confirm their password before continuing...
+//  })->middleware(['auth', 'password.confirm']);
+
   Route::post('/update_profil','CompteController@updateprofil');
+
   Route::post('/modification-password', 'CompteController@modificationpassword');
   //fin
+
+  Route::get('/search', 'ClientController@search')->name('clients.search');
+
   //supprimer un utilisateur
   Route::get('/delete-utilisateur/{id_utilisateur}','CompteController@delete_utilisateur');
 
   //supprimer un clients
   Route::get('/delete-client/{id_client}','ClientController@deleteclient');
 
+  //liste des $emprunts
+  Route::get('/liste-des-emprunts/{id_client}', 'EmpruntController@liste');
+
   //ajouter un emprunt
-  Route::get('/add-emprunt','EmpruntController@formulaire');
-  Route::post('/add-emprunt','EmpruntController@traitement');
+  Route::get('/add-emprunt/{id_client?}','EmpruntController@formulaire');
+  Route::post('/add-emprunt/{id_client?}','EmpruntController@traitement');
 
   Route::get('/delete-emprunt/{id_emprunt}','EmpruntController@delete_emprunt');
 
   Route::get('/deconnexion', 'CompteController@deconnexion');
+
   Route::get('/accueil', function(){
     return view('accueil');
   });

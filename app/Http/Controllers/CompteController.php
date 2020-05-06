@@ -28,16 +28,16 @@ tandis que auth->guest() retourne vrai si la personne n'est pas connecté et fau
     }
 
 
-      public function delete_utilisateur()
-      {
-        $id_utilisateur = request('id_utilisateur');
+    public function delete_utilisateur()
+    {
+      $id_utilisateur = request('id_utilisateur');
 
-        $utilisateur_delete = DB::delete('delete from utilisateurs where id = ?',[$id_utilisateur]);
-        $utilisateur_delete_clients = DB::delete('delete from clients where id_utilisateur = ?',[$id_utilisateur]);
-        flash('Utilisateur supprimé avec succès!')->success();
-        return redirect('/utilisateurs');
+      $utilisateur_delete = DB::delete('delete from utilisateurs where id = ?',[$id_utilisateur]);
+      $utilisateur_delete_clients = DB::delete('delete from clients where id_utilisateur = ?',[$id_utilisateur]);
+      flash('Utilisateur supprimé avec succès!')->success();
+      return redirect('/utilisateurs');
 
-      }
+    }
 
 
 
@@ -109,7 +109,17 @@ tandis que auth->guest() retourne vrai si la personne n'est pas connecté et fau
         return redirect('/connexion');
       }
 
-      return view('accueil');
+      if((auth()->user()->statut) == 1){
+        $clients =  DB::select('select * from clients order by created_at desc limit 5');
+      }else{
+        $clients = DB::select('select * from clients where id_utilisateur = ? order by created_at desc limit 5', [(auth()->user()->id)]);
+      }
+      $nbr_clients = DB::table('clients')->where('id_utilisateur', (auth()->user()->id))->count();
+
+      return view('accueil' , [
+        'nbr_clients' => $nbr_clients,
+        'clients' => $clients
+      ]);
     }
 
     public function deconnexion()
